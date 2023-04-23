@@ -4,72 +4,43 @@
 class Solution {
 public:
     double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
-        
-                   // ** Intuition  **
-        // I have to find out correct left half and correct right half
-          // i.e : // 7 ,  || 12 , 14 , 15  --> parition it
-                  //  1 , 2 , 3 , 4 , || 9 , 11  --> parition it
-                  // Now just findout max(left1,left2), min(right1,right2)
-        
-        
-        // Initilaization of some neccessary variables
-        int n1=nums1.size();
-        int n2=nums2.size();
-        int n=n1+n2;
-         
-      if(n1>n2)  return findMedianSortedArrays(nums2,nums1);
-        
-     // When length is even, let's say 10 then left half length should be: (10+1)/2 =>5
-     // When length is odd, let's say 11 then left half length should be: (11+1)/2 =>6
-        // This mean that this formula gonna work in both condition
-        int partition=(n+1)/2; 
-        
-    
-    // Edge Case
-    if(n1==0)
-        return n2%2?nums2[n2/2]:(nums2[n2/2]+nums2[n2/2-1])/2.0;
-    
-    if(n2==0)
-        return n1%2?nums1[n1/2]:(nums1[n1/2]+nums1[n1/2-1])/2.0;
-    
-    // Now do Partioning
-    int left1=0;
-    int right1=n1;
-    int cut1,cut2;
-    int l1,r1,l2,r2;
-    
-    do
-    {   
-        //Findout 'cut1' and 'cut2'
-        cut1=(left1+right1)/2;
-        cut2=partition-cut1;
-   
-        // Calculation for l1
-        l1=cut1==0?INT_MIN:nums1[cut1-1];
-        
-        // Calculation for l2
-        l2=cut2==0?INT_MIN:nums2[cut2-1];
-        
-        // Calculation for r1
-        r1=cut1>=n1?INT_MAX:nums1[cut1];
-        
-        // Calculation for r2
-        r2=cut2>=n2?INT_MAX:nums2[cut2];
-        
-        if(l1<=r2&&l2<=r1)
-             // Return Result
-             return n%2?max(l1,l2):(max(l1,l2)+min(r1,r2))/2.0;
-        else
-            
-        if(l1>r2)
-            right1=cut1-1;
-        else
-             left1=cut1+1;
-       
-       
-    }while(left1<=right1);
-        
-             
-    return 0.0;
+    int n = nums1.size();
+    int m = nums2.size();
+    if (n > m) {
+        return findMedianSortedArrays(nums2, nums1);
     }
+    int l = 0;
+    int r = n;
+    while (l <= r) {
+        int i = (l + r) / 2;
+        int j = (n + m + 1) / 2 - i;
+        if (j > 0 && i < n && nums2[j - 1] > nums1[i]) {
+            l = i + 1;
+        } else if (i > 0 && j < m && nums1[i - 1] > nums2[j]) {
+            r = i - 1;
+        } else {
+            int leftMax = 0;
+            if (i == 0) {
+                leftMax = nums2[j - 1];
+            } else if (j == 0) {
+                leftMax = nums1[i - 1];
+            } else {
+                leftMax = max(nums1[i - 1], nums2[j - 1]);
+            }
+            if ((n + m) % 2 == 1) {
+                return leftMax;
+            }
+            int rightMin = 0;
+            if (i == n) {
+                rightMin = nums2[j];
+            } else if (j == m) {
+                rightMin = nums1[i];
+            } else {
+                rightMin = min(nums1[i], nums2[j]);
+            }
+            return (leftMax + rightMin) / 2.0;
+        }
+    }
+    return -1.0;
+}
 };
