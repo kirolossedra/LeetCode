@@ -7,7 +7,7 @@
 
 | Problem Number | Problem Type       |
 |----------------|--------------------|
-| 1              | Coding             |
+| 791           | Lambda            |
 | 2              | Math               |
 | 3              | Logic              |
 | 4              | Diagram            |
