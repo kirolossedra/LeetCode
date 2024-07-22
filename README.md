@@ -8,7 +8,7 @@
 | Problem Number | Problem Type       |
 |----------------|--------------------|
 | 791           | Lambda            |
-| 2              | Math               |
+| 905            | Lambda      |
 | 3              | Logic              |
 | 4              | Diagram            |
 | 5              | Writing            |
