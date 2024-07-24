@@ -12,3 +12,6 @@
 | 1636           | Lambda      |
 
 
+ Need to train on the trie and advanced algorithms and window and modern C++ and backtracking and map and graph algorithms
+
+
